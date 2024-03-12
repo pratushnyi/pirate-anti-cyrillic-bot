@@ -1,0 +1,11 @@
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+
+app = 'pirate-anti-cyrillic-bot'
+primary_region = 'cdg'
+
+[build]
+
+[[vm]]
+  size = 'shared-cpu-1x'
+  memory = '256mb'
+  cpus = 1
