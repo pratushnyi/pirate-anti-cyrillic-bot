@@ -46,6 +46,11 @@ func main() {
 		}
 
 		msgText := update.Message.Text
+
+		if msgText == "" {
+			msgText = update.Message.Caption
+		}
+
 		if re.MatchString(msgText) {
 			deleteMsg := tgbotapi.NewDeleteMessage(update.Message.Chat.ID, update.Message.MessageID)
 
