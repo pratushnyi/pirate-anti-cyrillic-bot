@@ -6,11 +6,28 @@ import (
 	"log"
 	"os"
 	"regexp"
+	"strconv"
 )
 
 func main() {
 
-	bot, err := tgbotapi.NewBotAPI(os.Getenv("TELEGRAM_BOT_TOKEN"))
+	botToken := os.Getenv("TELEGRAM_BOT_TOKEN")
+	updateConfigTimeoutString := os.Getenv("UPDATE_CONFIG_TIMEOUT")
+
+	if botToken == "" {
+		panic("Environment variable TELEGRAM_BOT_TOKEN should be filled")
+	}
+
+	if updateConfigTimeoutString == "" {
+		updateConfigTimeoutString = "1"
+	}
+
+	updateConfigTimeout, err := strconv.Atoi(updateConfigTimeoutString)
+	if err != nil {
+		panic("Environment variable UPDATE_CONFIG_TIMEOUT should be an integer")
+	}
+
+	bot, err := tgbotapi.NewBotAPI(botToken)
 	if err != nil {
 		panic(err)
 	}
@@ -18,7 +35,7 @@ func main() {
 	bot.Debug = true
 
 	updateConfig := tgbotapi.NewUpdate(0)
-	updateConfig.Timeout = 1 // todo to config
+	updateConfig.Timeout = updateConfigTimeout
 
 	re := regexp.MustCompile(`(?i)[а-яё]`)
 
