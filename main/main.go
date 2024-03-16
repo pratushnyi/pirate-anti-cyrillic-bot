@@ -14,6 +14,8 @@ func main() {
 	botToken := os.Getenv("TELEGRAM_BOT_TOKEN")
 	updateConfigTimeoutString := os.Getenv("UPDATE_CONFIG_TIMEOUT")
 
+	botState := "enabled"
+
 	if botToken == "" {
 		panic("Environment variable TELEGRAM_BOT_TOKEN should be filled")
 	}
@@ -51,6 +53,14 @@ func main() {
 
 		if update.Message.IsCommand() {
 			switch update.Message.Command() {
+			case "enable":
+				botState = "enabled"
+				botMessage.Text = "Bot is enabled now"
+			case "disable":
+				botState = "disabled"
+				botMessage.Text = "Bot is disabled now"
+			case "status":
+				botMessage.Text = fmt.Sprintf("Bot is %s now", botState)
 			default:
 				botMessage.Text = "I don't know that command yet"
 			}
@@ -59,6 +69,11 @@ func main() {
 				log.Panic(err)
 			}
 
+			continue
+		}
+
+		if botState == "disabled" {
+			log.Println("Bot is disabled now")
 			continue
 		}
 
