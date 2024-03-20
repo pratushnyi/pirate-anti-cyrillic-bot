@@ -61,12 +61,12 @@ func main() {
 				botMessage.Text = "Bot is disabled now"
 			case "status":
 				botMessage.Text = fmt.Sprintf("Bot is %s now", botState)
-			default:
-				botMessage.Text = "I don't know that command yet"
 			}
 
-			if _, err := bot.Send(botMessage); err != nil {
-				log.Panic(err)
+			if botMessage.Text != "" {
+				if _, err := bot.Send(botMessage); err != nil {
+					log.Panic(err)
+				}
 			}
 
 			continue
