@@ -1,9 +1,10 @@
 name: Deploy to Fly
-on: pull_request
+on: workflow_dispatch
 jobs:
   deploy:
     name: deploy
     runs-on: ubuntu-latest
+    if: github.actor in ['elLemurino']
     steps:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
