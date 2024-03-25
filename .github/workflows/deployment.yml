@@ -4,7 +4,7 @@ jobs:
   deploy:
     name: deploy
     runs-on: ubuntu-latest
-    if: ${{ github.actor in ['elLemurino'] }}
+    if: ${{ github.actor == 'elLemurino' }}
     steps:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
